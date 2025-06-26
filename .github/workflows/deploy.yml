@@ -1,6 +1,25 @@
+name: Deploy Vite to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+defaults:
+  run:
+    working-directory: ./frontend
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout
@@ -23,11 +42,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-        working-directory: frontend
 
       - name: Build
         run: pnpm run build
-        working-directory: frontend
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -35,7 +52,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: frontend/dist
+          path: ./frontend/dist
 
       - name: Deploy to GitHub Pages
         id: deployment

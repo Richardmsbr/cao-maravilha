@@ -8,6 +8,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./cao-maravilha
+
     permissions:
       contents: read
       pages: write
@@ -26,7 +30,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
+          cache-dependency-path: cao-maravilha/pnpm-lock.yaml
 
       - name: Enable Corepack
         run: corepack enable
@@ -46,7 +50,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./cao-maravilha/dist
 
       - name: Deploy to GitHub Pages
         id: deployment

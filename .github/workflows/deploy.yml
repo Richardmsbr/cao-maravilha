@@ -4,13 +4,13 @@ on:
   push:
     branches: [main]
 
+defaults:
+  run:
+    working-directory: ./frontend
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: ./  # Projeto está na raiz
 
     permissions:
       contents: read
@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-          cache-dependency-path: ./pnpm-lock.yaml  # Caminho explícito para o lock file do pnpm
+          cache-dependency-path: 'frontend/pnpm-lock.yaml'  # Caminho relativo à raiz do repositório
 
       - name: Enable Corepack
         run: corepack enable
@@ -52,7 +52,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./frontend/dist  # Caminho relativo à raiz do repositório
 
       - name: Deploy to GitHub Pages
         id: deployment

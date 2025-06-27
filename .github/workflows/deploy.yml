@@ -29,13 +29,13 @@ jobs:
       - name: Instalar PNPM
         run: npm install -g pnpm
 
-      - name: Verificar versão do PNPM
+      - name: Verificar instalação do pnpm
         run: pnpm --version
 
       - name: Instalar dependências
         run: pnpm install
 
-      - name: Rodar build
+      - name: Build do projeto
         run: pnpm run build
 
       - name: Configurar GitHub Pages

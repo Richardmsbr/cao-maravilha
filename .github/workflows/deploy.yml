@@ -7,7 +7,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: read
       pages: write
@@ -18,31 +18,34 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-    - name: Setup pnpm
-      uses: pnpm/action-setup@v4
+      - name: Instalar PNPM
+        run: npm install -g pnpm
 
-    - name: Install dependencies
-      run: pnpm install
+      - name: Verificar versão do PNPM
+        run: pnpm --version
 
-    - name: Build
-      run: pnpm run build
+      - name: Instalar dependências
+        run: pnpm install
 
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
+      - name: Rodar build
+        run: pnpm run build
 
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: './dist'
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v4
 
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      - name: Enviar artefato para GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Fazer deploy para o GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

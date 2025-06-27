@@ -1,3 +1,0 @@
-# Clínica Veterinária Cão Maravilha
-
-Landing page moderna e responsiva para a Clínica Veterinária Cão Maravilha, localizada na zona norte de São Paulo.
